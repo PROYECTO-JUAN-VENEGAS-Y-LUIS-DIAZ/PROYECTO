@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AdoptaPet</string>
+    <string name="tagline">Give them a second chance</string>
+
+    <string name="welcome_explore">Explore pets</string>
+    <string name="welcome_register">Register pet</string>
+    <string name="welcome_login">Log in</string>
+
+    <string name="search_by_name">Search by name…</string>
+    <string name="filter_all">All</string>
+    <string name="species_dogs">Dogs</string>
+    <string name="species_cats">Cats</string>
+    <string name="species_others">Others</string>
+    <string name="empty_list">No pets match your search</string>
+
+    <string name="species_dog">Dog</string>
+    <string name="species_cat">Cat</string>
+    <string name="species_other">Other</string>
+    <string name="size_small">Small</string>
+    <string name="size_medium">Medium</string>
+    <string name="size_large">Large</string>
+    <string name="status_available">Available</string>
+    <string name="status_in_process">In process</string>
+    <string name="status_adopted">Adopted</string>
+
+    <plurals name="age_years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+
+    <string name="label_size">Size</string>
+    <string name="label_status">Status</string>
+    <string name="label_breed">Breed</string>
+
+    <string name="filters_title">Filters</string>
+    <string name="filters_species">Species</string>
+    <string name="filters_size">Size</string>
+    <string name="filters_status">Adoption status</string>
+    <string name="filters_clear">Clear</string>
+    <string name="filters_apply">Apply</string>
+
+    <string name="register_title">Register pet</string>
+    <string name="edit_title">Edit pet</string>
+    <string name="add_photo">Add photo</string>
+    <string name="take_photo">Take photo</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="field_name">Name</string>
+    <string name="hint_name">E.g. Max</string>
+    <string name="field_species">Species</string>
+    <string name="hint_select">Select an option</string>
+    <string name="field_age">Age</string>
+    <string name="hint_age">E.g. 2</string>
+    <string name="field_size">Size</string>
+    <string name="field_breed">Breed</string>
+    <string name="hint_breed">E.g. Labrador</string>
+    <string name="field_description">Description</string>
+    <string name="hint_description">Describe personality, care, etc.</string>
+    <string name="save">Save</string>
+
+    <string name="detail_description">Description</string>
+    <string name="detail_contact">Contact</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+
+    <string name="delete_title">Delete pet</string>
+    <string name="delete_message">Are you sure you want to delete %1$s? This action cannot be undone.</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string name="map_title">Shelter map</string>
+    <string name="map_search_hint">Search in this area</string>
+    <string name="view_details">View details</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_catalog">Catalog</string>
+    <string name="nav_add">Add</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="message_pet_saved">Pet saved successfully</string>
+    <string name="message_pet_deleted">Pet deleted</string>
+    <string name="error_required">This field is required</string>
+    <string name="error_age_invalid">Enter a valid age (0–30)</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_pet_not_found">Pet not found</string>
+</resources>
