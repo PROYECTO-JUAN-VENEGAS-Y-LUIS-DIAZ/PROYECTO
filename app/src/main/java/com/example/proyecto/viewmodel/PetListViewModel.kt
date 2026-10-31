@@ -1,65 +1,104 @@
 package com.example.proyecto.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyecto.R
+import com.example.proyecto.domain.model.AdoptionStatus
 import com.example.proyecto.domain.model.Pet
-import com.example.proyecto.domain.model.PetFilter
+import com.example.proyecto.domain.model.PetSize
 import com.example.proyecto.domain.model.Species
 import com.example.proyecto.domain.repository.PetRepository
-import com.example.proyecto.util.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+data class PetListUiState(
+    val pets: List<Pet> = emptyList(),
+    val query: String = "",
+    val species: Set<Species> = emptySet(),
+    val sizes: Set<PetSize> = emptySet(),
+    val statuses: Set<AdoptionStatus> = emptySet(),
+    val breed: String = "",
+    val isLoading: Boolean = true,
+    val petPendingDelete: Pet? = null
+)
 
 class PetListViewModel(
-    petRepository: PetRepository
+    private val petRepository: PetRepository
 ) : ViewModel() {
 
-    private val _filter = MutableStateFlow(PetFilter())
-    val filter: StateFlow<PetFilter> = _filter.asStateFlow()
+    private val _uiState = MutableLiveData(PetListUiState())
+    val uiState: LiveData<PetListUiState> = _uiState
 
-    private val _showFilterDialog = MutableStateFlow(false)
-    val showFilterDialog: StateFlow<Boolean> = _showFilterDialog.asStateFlow()
+    private var allPets: List<Pet> = emptyList()
 
-    val uiState: StateFlow<UiState<List<Pet>>> =
-        combine(petRepository.observePets(), _filter) { pets, filter ->
-            val result: UiState<List<Pet>> = UiState.Success(pets.filter { filter.matches(it) })
-            result
+    init {
+        loadPets()
+    }
+
+    fun loadPets() {
+        viewModelScope.launch {
+            allPets = petRepository.getPets()
+            publish { it.copy(isLoading = false) }
         }
-            .catch { emit(UiState.Error(R.string.error_generic)) }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
+    }
 
     fun onQueryChange(query: String) {
-        _filter.update { it.copy(query = query) }
+        publish { it.copy(query = query) }
     }
 
-    /** Chip selection. Pass null for "All". */
     fun onSpeciesChipSelected(species: Species?) {
-        _filter.update {
-            it.copy(species = if (species == null) emptySet() else setOf(species))
+        publish { it.copy(species = species?.let { s -> setOf(s) } ?: emptySet()) }
+    }
+
+    fun onApplyFilters(
+        species: Set<Species>,
+        sizes: Set<PetSize>,
+        statuses: Set<AdoptionStatus>,
+        breed: String
+    ) {
+        publish { it.copy(species = species, sizes = sizes, statuses = statuses, breed = breed) }
+    }
+
+    fun onClearFilters() {
+        publish {
+            it.copy(
+                species = emptySet(),
+                sizes = emptySet(),
+                statuses = emptySet(),
+                breed = ""
+            )
         }
     }
 
-    fun applyFilter(newFilter: PetFilter) {
-        _filter.update { newFilter.copy(query = it.query) }
-        _showFilterDialog.value = false
+    fun onDeleteRequested(pet: Pet) {
+        publish { it.copy(petPendingDelete = pet) }
     }
 
-    fun clearFilters() {
-        _filter.update { PetFilter(query = it.query) }
+    fun onDeleteDismissed() {
+        publish { it.copy(petPendingDelete = null) }
     }
 
-    fun openFilterDialog() {
-        _showFilterDialog.value = true
+    fun onDeleteConfirmed() {
+        val pet = _uiState.value?.petPendingDelete ?: return
+        viewModelScope.launch {
+            petRepository.deletePet(pet.id)
+            allPets = petRepository.getPets()
+            publish { it.copy(petPendingDelete = null) }
+        }
     }
 
-    fun closeFilterDialog() {
-        _showFilterDialog.value = false
+    private fun publish(transform: (PetListUiState) -> PetListUiState) {
+        val updated = transform(_uiState.value ?: PetListUiState())
+        _uiState.value = updated.copy(pets = allPets.filter { matches(it, updated) })
+    }
+
+    private fun matches(pet: Pet, state: PetListUiState): Boolean {
+        val text = state.query.trim()
+        val breed = state.breed.trim()
+        return (text.isEmpty() || pet.name.contains(text, ignoreCase = true)) &&
+                (state.species.isEmpty() || pet.species in state.species) &&
+                (state.sizes.isEmpty() || pet.size in state.sizes) &&
+                (state.statuses.isEmpty() || pet.status in state.statuses) &&
+                (breed.isEmpty() || pet.breed.contains(breed, ignoreCase = true))
     }
 }

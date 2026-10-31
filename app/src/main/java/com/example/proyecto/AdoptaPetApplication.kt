@@ -6,7 +6,7 @@ import com.example.proyecto.viewmodel.AdoptaPetViewModelFactory
 
 class AdoptaPetApplication : Application() {
 
-    val repository: MemoryDataRepository by lazy { MemoryDataRepository() }
+    val repository: MemoryDataRepository by lazy { MemoryDataRepository(this) }
 
     val viewModelFactory: AdoptaPetViewModelFactory by lazy {
         AdoptaPetViewModelFactory(

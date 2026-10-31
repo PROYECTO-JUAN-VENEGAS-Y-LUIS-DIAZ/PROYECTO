@@ -1,65 +1,61 @@
 package com.example.proyecto.viewmodel
 
-import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyecto.R
 import com.example.proyecto.domain.model.Pet
 import com.example.proyecto.domain.model.Shelter
 import com.example.proyecto.domain.repository.PetRepository
 import com.example.proyecto.domain.repository.ShelterRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class PetDetailUiState(
-    val isLoading: Boolean = true,
     val pet: Pet? = null,
     val shelter: Shelter? = null,
+    val isLoading: Boolean = true,
+    val notFound: Boolean = false,
     val showDeleteDialog: Boolean = false,
-    val deleted: Boolean = false,
-    @StringRes val errorRes: Int? = null
+    val isDeleted: Boolean = false
 )
 
 class PetDetailViewModel(
     private val petRepository: PetRepository,
-    private val shelterRepository: ShelterRepository
+    private val shelterRepository: ShelterRepository,
+    private val petId: Long
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(PetDetailUiState())
-    val uiState: StateFlow<PetDetailUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableLiveData(PetDetailUiState())
+    val uiState: LiveData<PetDetailUiState> = _uiState
 
-    fun load(petId: Long) {
+    init {
+        load()
+    }
+
+    fun load() {
         viewModelScope.launch {
             val pet = petRepository.getPetById(petId)
-            if (pet == null) {
-                _uiState.update { it.copy(isLoading = false, errorRes = R.string.error_pet_not_found) }
-            } else {
-                val shelter = shelterRepository.getShelterById(pet.shelterId)
-                _uiState.update { it.copy(isLoading = false, pet = pet, shelter = shelter, errorRes = null) }
-            }
+            val shelter = pet?.let { shelterRepository.getShelterById(it.shelterId) }
+            update { it.copy(pet = pet, shelter = shelter, isLoading = false, notFound = pet == null) }
         }
     }
 
     fun onDeleteClick() {
-        _uiState.update { it.copy(showDeleteDialog = true) }
+        update { it.copy(showDeleteDialog = true) }
     }
 
-    fun onDeleteDismiss() {
-        _uiState.update { it.copy(showDeleteDialog = false) }
+    fun onDeleteDismissed() {
+        update { it.copy(showDeleteDialog = false) }
     }
 
-    fun onDeleteConfirm() {
-        val pet = _uiState.value.pet ?: return
+    fun onDeleteConfirmed() {
         viewModelScope.launch {
-            try {
-                petRepository.deletePet(pet.id)
-                _uiState.update { it.copy(showDeleteDialog = false, deleted = true) }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(showDeleteDialog = false, errorRes = R.string.error_generic) }
-            }
+            petRepository.deletePet(petId)
+            update { it.copy(showDeleteDialog = false, isDeleted = true) }
         }
+    }
+
+    private fun update(transform: (PetDetailUiState) -> PetDetailUiState) {
+        _uiState.value = transform(_uiState.value ?: PetDetailUiState())
     }
 }

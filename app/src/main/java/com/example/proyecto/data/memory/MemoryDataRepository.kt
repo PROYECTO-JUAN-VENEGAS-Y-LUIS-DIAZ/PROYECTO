@@ -1,5 +1,8 @@
 package com.example.proyecto.data.memory
 
+import android.content.Context
+import androidx.annotation.RawRes
+import com.example.proyecto.R
 import com.example.proyecto.domain.model.AdoptionStatus
 import com.example.proyecto.domain.model.GeoPoint
 import com.example.proyecto.domain.model.Pet
@@ -9,80 +12,74 @@ import com.example.proyecto.domain.model.Species
 import com.example.proyecto.domain.repository.PetRepository
 import com.example.proyecto.domain.repository.ShelterRepository
 import java.util.concurrent.atomic.AtomicLong
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import org.json.JSONArray
 
-class MemoryDataRepository : PetRepository, ShelterRepository {
+class MemoryDataRepository(context: Context) : PetRepository, ShelterRepository {
 
-    private val pets = MutableStateFlow(seedPets())
-    private val shelters = MutableStateFlow(seedShelters())
-    private val nextId = AtomicLong(100L)
+    private val lock = Any()
+    private val pets: MutableList<Pet> = loadPets(context).toMutableList()
+    private val shelters: List<Shelter> = loadShelters(context)
+    private val nextId = AtomicLong((pets.maxOfOrNull { it.id } ?: 0L) + 1L)
 
+    override suspend fun getPets(): List<Pet> = synchronized(lock) { pets.toList() }
 
-    override fun observePets(): Flow<List<Pet>> = pets.asStateFlow()
-
-    override suspend fun getPetById(id: Long): Pet? = pets.value.firstOrNull { it.id == id }
+    override suspend fun getPetById(id: Long): Pet? =
+        synchronized(lock) { pets.firstOrNull { it.id == id } }
 
     override suspend fun addPet(pet: Pet): Long {
         val newId = nextId.getAndIncrement()
-        pets.update { current -> current + pet.copy(id = newId) }
+        synchronized(lock) { pets.add(pet.copy(id = newId)) }
         return newId
     }
 
     override suspend fun updatePet(pet: Pet) {
-        pets.update { current -> current.map { if (it.id == pet.id) pet else it } }
+        synchronized(lock) {
+            val index = pets.indexOfFirst { it.id == pet.id }
+            if (index != -1) pets[index] = pet
+        }
     }
 
     override suspend fun deletePet(id: Long) {
-        pets.update { current -> current.filterNot { it.id == id } }
+        synchronized(lock) { pets.removeAll { it.id == id } }
     }
 
-
-    override fun observeShelters(): Flow<List<Shelter>> = shelters.asStateFlow()
+    override suspend fun getShelters(): List<Shelter> = shelters
 
     override suspend fun getShelterById(id: Long): Shelter? =
-        shelters.value.firstOrNull { it.id == id }
+        shelters.firstOrNull { it.id == id }
+    
+    private fun Context.readRaw(@RawRes resId: Int): String =
+        resources.openRawResource(resId).bufferedReader().use { it.readText() }
 
+    private fun loadShelters(context: Context): List<Shelter> {
+        val array = JSONArray(context.readRaw(R.raw.shelters))
+        return List(array.length()) { i ->
+            val item = array.getJSONObject(i)
+            Shelter(
+                item.getLong("id"),
+                item.getString("name"),
+                item.getString("phone"),
+                item.getString("address"),
+                GeoPoint(item.getDouble("latitude"), item.getDouble("longitude"))
+            )
+        }
+    }
 
-    private fun seedShelters(): List<Shelter> = listOf(
-        Shelter(1L, "Refugio Huellas", "+506 8888 8888", "San José, Costa Rica", GeoPoint(9.9281, -84.0907)),
-        Shelter(2L, "Patitas Felices", "+506 8777 7777", "Heredia, Costa Rica", GeoPoint(9.9981, -84.1198)),
-        Shelter(3L, "Hogar Peludo", "+506 8666 6666", "Cartago, Costa Rica", GeoPoint(9.8644, -83.9194)),
-        Shelter(4L, "Amigos Fieles", "+506 8555 5555", "Santa Ana, Costa Rica", GeoPoint(9.9328, -84.1833))
-    )
-
-    private fun seedPets(): List<Pet> = listOf(
-        Pet(
-            id = 1L, name = "Max", species = Species.DOG, ageYears = 2, size = PetSize.MEDIUM,
-            breed = "Labrador",
-            description = "Max is a very affectionate and playful dog. He loves walking and being around people.",
-            status = AdoptionStatus.AVAILABLE, shelterId = 1L
-        ),
-        Pet(
-            id = 2L, name = "Luna", species = Species.CAT, ageYears = 1, size = PetSize.SMALL,
-            breed = "Siamese",
-            description = "Luna is calm and curious. She is great for apartments.",
-            status = AdoptionStatus.AVAILABLE, shelterId = 1L
-        ),
-        Pet(
-            id = 3L, name = "Rocky", species = Species.DOG, ageYears = 4, size = PetSize.LARGE,
-            breed = "German Shepherd",
-            description = "Rocky is loyal and protective. He needs space and daily exercise.",
-            status = AdoptionStatus.IN_PROCESS, shelterId = 2L
-        ),
-        Pet(
-            id = 4L, name = "Misty", species = Species.CAT, ageYears = 3, size = PetSize.SMALL,
-            breed = "",
-            description = "Misty is shy at first but very loving once she trusts you.",
-            status = AdoptionStatus.AVAILABLE, shelterId = 3L
-        ),
-        Pet(
-            id = 5L, name = "Coco", species = Species.OTHER, ageYears = 1, size = PetSize.SMALL,
-            breed = "Rabbit",
-            description = "Coco is a gentle rabbit who enjoys fresh vegetables and open spaces.",
-            status = AdoptionStatus.AVAILABLE, shelterId = 4L
-        )
-    )
+    private fun loadPets(context: Context): List<Pet> {
+        val array = JSONArray(context.readRaw(R.raw.pets))
+        return List(array.length()) { i ->
+            val item = array.getJSONObject(i)
+            Pet(
+                id = item.getLong("id"),
+                name = item.getString("name"),
+                species = Species.valueOf(item.getString("species")),
+                ageYears = item.getInt("ageYears"),
+                size = PetSize.valueOf(item.getString("size")),
+                breed = item.optString("breed", ""),
+                description = item.getString("description"),
+                status = AdoptionStatus.valueOf(item.getString("status")),
+                shelterId = item.getLong("shelterId")
+            )
+        }
+    }
 }
