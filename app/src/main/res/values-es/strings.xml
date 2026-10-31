@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AdoptaPet</string>
+    <string name="tagline">Dale una segunda oportunidad</string>
+
+    <string name="welcome_explore">Explorar mascotas</string>
+    <string name="welcome_register">Registrar mascota</string>
+    <string name="welcome_login">Iniciar sesión</string>
+
+    <string name="search_by_name">Buscar por nombre…</string>
+    <string name="filter_all">Todos</string>
+    <string name="species_dogs">Perros</string>
+    <string name="species_cats">Gatos</string>
+    <string name="species_others">Otros</string>
+    <string name="empty_list">Ninguna mascota coincide con tu búsqueda</string>
+
+    <string name="species_dog">Perro</string>
+    <string name="species_cat">Gato</string>
+    <string name="species_other">Otro</string>
+    <string name="size_small">Pequeño</string>
+    <string name="size_medium">Mediano</string>
+    <string name="size_large">Grande</string>
+    <string name="status_available">Disponible</string>
+    <string name="status_in_process">En proceso</string>
+    <string name="status_adopted">Adoptado</string>
+
+    <plurals name="age_years">
+        <item quantity="one">%d año</item>
+        <item quantity="other">%d años</item>
+    </plurals>
+
+
+    <string name="label_size">Tamaño</string>
+    <string name="label_status">Estado</string>
+    <string name="label_breed">Raza</string>
+
+    <string name="filters_title">Filtros</string>
+    <string name="filters_species">Especie</string>
+    <string name="filters_size">Tamaño</string>
+    <string name="filters_status">Estado de adopción</string>
+    <string name="filters_clear">Limpiar</string>
+    <string name="filters_apply">Aplicar</string>
+
+    <string name="register_title">Registrar mascota</string>
+    <string name="edit_title">Editar mascota</string>
+    <string name="add_photo">Agregar foto</string>
+    <string name="take_photo">Tomar foto</string>
+    <string name="choose_from_gallery">Elegir de la galería</string>
+    <string name="field_name">Nombre</string>
+    <string name="hint_name">Ej. Max</string>
+    <string name="field_species">Especie</string>
+    <string name="hint_select">Selecciona una opción</string>
+    <string name="field_age">Edad</string>
+    <string name="hint_age">Ej. 2</string>
+    <string name="field_size">Tamaño</string>
+    <string name="field_breed">Raza</string>
+    <string name="hint_breed">Ej. Labrador</string>
+    <string name="field_description">Descripción</string>
+    <string name="hint_description">Describe la personalidad, cuidados, etc.</string>
+    <string name="save">Guardar</string>
+
+    <string name="detail_description">Descripción</string>
+    <string name="detail_contact">Contacto</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <string name="delete_title">Eliminar mascota</string>
+    <string name="delete_message">¿Estás seguro de que deseas eliminar a %1$s? Esta acción no se puede deshacer.</string>
+    <string name="cancel">Cancelar</string>
+
+    <string name="map_title">Mapa de refugios</string>
+    <string name="map_search_hint">Buscar en esta área</string>
+    <string name="view_details">Ver detalles</string>
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_catalog">Catálogo</string>
+    <string name="nav_add">Agregar</string>
+    <string name="nav_map">Mapa</string>
+    <string name="nav_profile">Perfil</string>
+
+    <string name="message_pet_saved">Mascota guardada correctamente</string>
+    <string name="message_pet_deleted">Mascota eliminada</string>
+    <string name="error_required">Este campo es obligatorio</string>
+    <string name="error_age_invalid">Ingresa una edad válida (0–30)</string>
+    <string name="error_generic">Algo salió mal. Inténtalo de nuevo.</string>
+    <string name="error_pet_not_found">Mascota no encontrada</string>
+</resources>
