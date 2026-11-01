@@ -46,16 +46,16 @@
     <string name="add_photo">Agregar foto</string>
     <string name="take_photo">Tomar foto</string>
     <string name="choose_from_gallery">Elegir de la galería</string>
-    <string name="field_name">Nombre</string>
+    <string name="field_name">Nombre *</string>
     <string name="hint_name">Ej. Max</string>
-    <string name="field_species">Especie</string>
+    <string name="field_species">Especie *</string>
     <string name="hint_select">Selecciona una opción</string>
-    <string name="field_age">Edad</string>
+    <string name="field_age">Edad *</string>
     <string name="hint_age">Ej. 2</string>
-    <string name="field_size">Tamaño</string>
+    <string name="field_size">Tamaño *</string>
     <string name="field_breed">Raza</string>
     <string name="hint_breed">Ej. Labrador</string>
-    <string name="field_description">Descripción</string>
+    <string name="field_description">Descripción *</string>
     <string name="hint_description">Describe la personalidad, cuidados, etc.</string>
     <string name="save">Guardar</string>
 
@@ -84,4 +84,25 @@
     <string name="error_age_invalid">Ingresa una edad válida (0–30)</string>
     <string name="error_generic">Algo salió mal. Inténtalo de nuevo.</string>
     <string name="error_pet_not_found">Mascota no encontrada</string>
+
+    <string name="sample_pet_max_info">Perro · Mediano · 2 años</string>
+    <string name="sample_pet_luna_info">Gato · Pequeño · 1 año</string>
+    <string name="sample_pet_rocky_info">Perro · Grande · 4 años</string>
+    <string name="sample_pet_misty_info">Gato · Pequeño · 3 años</string>
+    <string name="sample_pet_max_description">Max es un perro muy cariñoso y juguetón. Le encanta pasear y convivir con personas. Es ideal para familias que tengan tiempo para dedicarle.</string>
+    <string name="delete_message_sample">¿Estás seguro de que deseas eliminar a Max? Esta acción no se puede deshacer.</string>
+
+    <string-array name="species_options">
+        <item>@string/hint_select</item>
+        <item>@string/species_dog</item>
+        <item>@string/species_cat</item>
+        <item>@string/species_other</item>
+    </string-array>
+
+    <string-array name="size_options">
+        <item>@string/hint_select</item>
+        <item>@string/size_small</item>
+        <item>@string/size_medium</item>
+        <item>@string/size_large</item>
+    </string-array>
 </resources>
