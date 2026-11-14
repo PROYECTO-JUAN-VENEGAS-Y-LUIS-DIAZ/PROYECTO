@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Max",
+    "species": "DOG",
+    "ageYears": 2,
+    "size": "MEDIUM",
+    "breed": "Labrador",
+    "description": "Max is a very affectionate and playful dog. He loves walking and being around people.",
+    "status": "AVAILABLE",
+    "shelterId": 1
+  },
+  {
+    "id": 2,
+    "name": "Luna",
+    "species": "CAT",
+    "ageYears": 1,
+    "size": "SMALL",
+    "breed": "Siamese",
+    "description": "Luna is calm and curious. She is great for apartments.",
+    "status": "AVAILABLE",
+    "shelterId": 1
+  },
+  {
+    "id": 3,
+    "name": "Rocky",
+    "species": "DOG",
+    "ageYears": 4,
+    "size": "LARGE",
+    "breed": "German Shepherd",
+    "description": "Rocky is loyal and protective. He needs space and daily exercise.",
+    "status": "IN_PROCESS",
+    "shelterId": 2
+  },
+  {
+    "id": 4,
+    "name": "Misty",
+    "species": "CAT",
+    "ageYears": 3,
+    "size": "SMALL",
+    "breed": "",
+    "description": "Misty is shy at first but very loving once she trusts you.",
+    "status": "AVAILABLE",
+    "shelterId": 3
+  },
+  {
+    "id": 5,
+    "name": "Coco",
+    "species": "OTHER",
+    "ageYears": 1,
+    "size": "SMALL",
+    "breed": "Rabbit",
+    "description": "Coco is a gentle rabbit who enjoys fresh vegetables and open spaces.",
+    "status": "AVAILABLE",
+    "shelterId": 4
+  }
+]

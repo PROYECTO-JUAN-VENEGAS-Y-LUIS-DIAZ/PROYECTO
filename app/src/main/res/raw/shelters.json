@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Refugio Huellas",
+    "phone": "+506 8888 8888",
+    "address": "San José, Costa Rica",
+    "latitude": 9.9281,
+    "longitude": -84.0907
+  },
+  {
+    "id": 2,
+    "name": "Patitas Felices",
+    "phone": "+506 8777 7777",
+    "address": "Heredia, Costa Rica",
+    "latitude": 9.9981,
+    "longitude": -84.1198
+  },
+  {
+    "id": 3,
+    "name": "Hogar Peludo",
+    "phone": "+506 8666 6666",
+    "address": "Cartago, Costa Rica",
+    "latitude": 9.8644,
+    "longitude": -83.9194
+  },
+  {
+    "id": 4,
+    "name": "Amigos Fieles",
+    "phone": "+506 8555 5555",
+    "address": "Santa Ana, Costa Rica",
+    "latitude": 9.9328,
+    "longitude": -84.1833
+  }
+]
