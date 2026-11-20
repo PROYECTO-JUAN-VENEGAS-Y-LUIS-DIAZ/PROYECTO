@@ -105,4 +105,46 @@
         <item>@string/size_medium</item>
         <item>@string/size_large</item>
     </string-array>
+
+    <string name="login_not_available">El inicio de sesión aún no está disponible</string>
+    <string name="profile_not_available">El perfil aún no está disponible</string>
+    <string name="pet_summary_format">%1$s · %2$s · %3$s</string>
+    <string name="question_title">Pregunta</string>
+    <string name="question_update_pet">¿Desea actualizar esta mascota?</string>
+    <string name="question_delete_pet">¿Desea eliminar esta mascota?</string>
+    <string name="question_update_shelter">¿Desea actualizar este refugio?</string>
+    <string name="question_delete_shelter">¿Desea eliminar este refugio?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="text_loading">Cargando...</string>
+    <string name="text_saving">Guardando...</string>
+    <string name="text_deleting">Eliminando...</string>
+    <string name="message_pet_created">Mascota guardada con ID %1$d</string>
+    <string name="message_pet_updated">Mascota actualizada correctamente</string>
+    <string name="message_shelter_created">Refugio guardado con ID %1$d</string>
+    <string name="message_shelter_updated">Refugio actualizado correctamente</string>
+    <string name="message_shelter_deleted">Refugio eliminado</string>
+    <string name="error_incomplete_data">Datos incompletos o inválidos</string>
+    <string name="error_invalid_id">Ingrese un ID numérico válido</string>
+    <string name="error_shelter_not_found">Refugio no encontrado</string>
+    <string name="field_pet_id">ID de mascota</string>
+    <string name="hint_pet_id">Buscar por ID</string>
+    <string name="content_description_search">Buscar</string>
+    <string name="map_area_label">Refugios cercanos</string>
+    <string name="no_shelters">No se encontraron refugios</string>
+    <string name="add_shelter">Registrar refugio</string>
+    <string name="shelter_register_title">Registrar refugio</string>
+    <string name="shelter_edit_title">Editar refugio</string>
+    <string name="field_shelter_id">ID de refugio</string>
+    <string name="hint_shelter_id">Buscar por ID</string>
+    <string name="field_shelter_name">Nombre *</string>
+    <string name="hint_shelter_name">Ej. Patitas Felices</string>
+    <string name="field_phone">Teléfono *</string>
+    <string name="hint_phone">Ej. +506 8888 8888</string>
+    <string name="field_address">Dirección *</string>
+    <string name="hint_address">Ej. San José, Costa Rica</string>
+    <string name="field_latitude">Latitud *</string>
+    <string name="hint_latitude">Ej. 9.9281</string>
+    <string name="field_longitude">Longitud *</string>
+    <string name="hint_longitude">Ej. -84.0907</string>
 </resources>
