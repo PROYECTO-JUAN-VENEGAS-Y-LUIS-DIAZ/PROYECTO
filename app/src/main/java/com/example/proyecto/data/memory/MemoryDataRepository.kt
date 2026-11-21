@@ -18,9 +18,8 @@ class MemoryDataRepository(context: Context) : PetRepository, ShelterRepository 
 
     private val lock = Any()
     private val pets: MutableList<Pet> = loadPets(context).toMutableList()
-    private val shelters: MutableList<Shelter> = loadShelters(context).toMutableList()
-    private val nextPetId = AtomicLong((pets.maxOfOrNull { it.id } ?: 0L) + 1L)
-    private val nextShelterId = AtomicLong((shelters.maxOfOrNull { it.id } ?: 0L) + 1L)
+    private val shelters: List<Shelter> = loadShelters(context)
+    private val nextId = AtomicLong((pets.maxOfOrNull { it.id } ?: 0L) + 1L)
 
     override suspend fun getPets(): List<Pet> = synchronized(lock) { pets.toList() }
 
@@ -28,7 +27,7 @@ class MemoryDataRepository(context: Context) : PetRepository, ShelterRepository 
         synchronized(lock) { pets.firstOrNull { it.id == id } }
 
     override suspend fun addPet(pet: Pet): Long {
-        val newId = nextPetId.getAndIncrement()
+        val newId = nextId.getAndIncrement()
         synchronized(lock) { pets.add(pet.copy(id = newId)) }
         return newId
     }
@@ -44,28 +43,11 @@ class MemoryDataRepository(context: Context) : PetRepository, ShelterRepository 
         synchronized(lock) { pets.removeAll { it.id == id } }
     }
 
-    override suspend fun getShelters(): List<Shelter> = synchronized(lock) { shelters.toList() }
+    override suspend fun getShelters(): List<Shelter> = shelters
 
     override suspend fun getShelterById(id: Long): Shelter? =
-        synchronized(lock) { shelters.firstOrNull { it.id == id } }
-
-    override suspend fun addShelter(shelter: Shelter): Long {
-        val newId = nextShelterId.getAndIncrement()
-        synchronized(lock) { shelters.add(shelter.copy(id = newId)) }
-        return newId
-    }
-
-    override suspend fun updateShelter(shelter: Shelter) {
-        synchronized(lock) {
-            val index = shelters.indexOfFirst { it.id == shelter.id }
-            if (index != -1) shelters[index] = shelter
-        }
-    }
-
-    override suspend fun deleteShelter(id: Long) {
-        synchronized(lock) { shelters.removeAll { it.id == id } }
-    }
-
+        shelters.firstOrNull { it.id == id }
+    
     private fun Context.readRaw(@RawRes resId: Int): String =
         resources.openRawResource(resId).bufferedReader().use { it.readText() }
 

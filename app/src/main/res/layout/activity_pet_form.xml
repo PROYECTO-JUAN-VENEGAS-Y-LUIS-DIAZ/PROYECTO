@@ -26,14 +26,9 @@
             android:paddingEnd="16dp">
 
             <TextView
-                android:id="@+id/tvBack_PetForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingTop="8dp"
                 android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
                 android:text="@string/icon_back"
                 android:textColor="@color/white"
                 android:textSize="28sp" />
@@ -59,47 +54,10 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/field_pet_id"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/txtId_PetForm"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_field"
-                        android:hint="@string/hint_pet_id"
-                        android:inputType="number"
-                        android:minHeight="48dp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:textColor="@color/text_primary" />
-
-                    <ImageButton
-                        android:id="@+id/btnSearch_PetForm"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="8dp"
-                        android:contentDescription="@string/content_description_search"
-                        app:srcCompat="@android:drawable/ic_menu_search" />
-                </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/llPhoto_PetForm"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
-                    android:layout_marginTop="16dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/bg_photo_circle"
                     android:gravity="center"
@@ -237,37 +195,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btnSave_PetForm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
-            <Button
-                android:id="@+id/btnCancel_PetForm"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="@string/cancel" />
-
-            <Button
-                android:id="@+id/btnDelete_PetForm"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="@string/delete"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnSave_PetForm"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:text="@string/save" />
-        </LinearLayout>
+            android:layout_height="56dp"
+            android:layout_margin="16dp"
+            android:text="@string/save" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,12 +33,12 @@
                     android:background="@color/detail_photo_background">
 
                     <TextView
-                        android:id="@+id/tvEmoji_PetDetail"
                         android:layout_width="140dp"
                         android:layout_height="140dp"
                         android:layout_gravity="center"
                         android:background="@drawable/bg_circle_soft"
                         android:gravity="center"
+                        android:text="@string/emoji_dog"
                         android:textSize="72sp" />
                 </FrameLayout>
 
@@ -59,6 +59,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="@string/sample_pet_max"
                             android:textColor="@color/text_primary"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -72,6 +73,7 @@
                             android:paddingTop="4dp"
                             android:paddingEnd="14dp"
                             android:paddingBottom="4dp"
+                            android:text="@string/status_available"
                             android:textColor="@color/white"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -82,6 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="@string/sample_pet_max_info"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -101,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
+                        android:text="@string/sample_pet_max_description"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
@@ -139,6 +143,7 @@
                                 android:id="@+id/tvShelterName_PetDetail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="@string/sample_shelter_name"
                                 android:textColor="@color/text_primary"
                                 android:textStyle="bold" />
 
@@ -146,6 +151,7 @@
                                 android:id="@+id/tvShelterPhone_PetDetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="@string/sample_shelter_phone"
                                 android:textColor="@color/location_blue"
                                 android:textStyle="bold" />
                         </LinearLayout>
