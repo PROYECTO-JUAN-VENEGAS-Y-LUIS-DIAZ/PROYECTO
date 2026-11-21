@@ -43,6 +43,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.recyclerview)
     implementation(libs.kotlinx.coroutines.android)
 }
